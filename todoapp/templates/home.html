@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+{% if user.is_authenticated %}
+
+<div class="row" >
+
+  <div class="col-md-3"></div>
+
+
+
+    <div class="col-md-6">
+<div class="container" align="center">
+
+  <form method="post">
+        {% csrf_token %}
+    <div class="form-group">
+      <label for="comment"></label>
+         <input type="text" class="form-control" name="title" placeholder="Başlık">
+      <textarea  class="form-control"  rows="3" name="comment" placeholder="Açıklama"></textarea>
+    </div>
+      <button type="submit" id="kaydet" class="btn btn-primary">Kaydet</button>
+      <div class="col-12">
+             <hr>
+      <h2><u>Yapılacaklar</u></h2></div>
+  </form>
+
+{% for todos in todos %}
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">{{ todos.title }}</h4>
+  </div>
+  <div class="card-block">
+    <h6 class="card-text">{{ todos.description }}</h6><br>
+      <form class="flex-container" method="post" action="" >
+            {% csrf_token %}
+            <input type="hidden" name="silme" value="{{ todos.id }}">
+             <button name="delete" type="submit" class="btn btn-danger"onclick="return confirm('Yapılacak listesini silmek istediğinize emin misiniz?')" >Sil </button>
+        </form>
+      <div class="col-md-3"><h6></h6></div>
+  </div>
+</div>
+
+    <div class="col-12">
+             <hr></div>
+{% endfor %}
+</div>
+
+</div>
+    <div class="col-md-3"></div>
+    </div>
+    </div>
+
+
+{% endif %}
+
+{% endblock %}
